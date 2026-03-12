@@ -1,54 +1,54 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import { NewAppScreen } from '@react-native/new-app-screen';
 import React from 'react';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import { StatusBar, View } from 'react-native';
 import CountScreen from './Components/Screens/countScreen/CountScreen';
 import { appStyles } from './App.styles';
 
 type AppProps = {
-  atributo: string;
-} 
-  let count = 0;
-  const handleOnPress = (value : number)=>{
-    
-    count++;
-    console.log(count +  "PAI")
-    console.log("preess buton"); 
-  };
-export class App extends React.Component<AppProps>{
-  private count: number = 0;
-  private label: string = 'hello';
-
-
-  handleOnPress2x = ()=>{
-
-    this.count=+2;
-    console.log(this.count +  "PAI")
-  console.log("preess buton"); 
+  atributo?: string;
 };
 
-  render(){
+type AppState = {
+  num1: number;
+  num2: number;
+  result: number;
+};
 
-    const label  ="Hello world"
-    const name = "juan"
-  return (
-    <View style={appStyles.safeArea}>
-      <StatusBar/>
-        <CountScreen label={this.label} OnPress={()=> handleOnPress(1)}></CountScreen>
-    </View>
-  );
+export class App extends React.Component<AppProps, AppState> {
+  private label: string = 'Resultado';
+
+  state: AppState = {
+    num1: 10,
+    num2: 5,
+    result: 0,
+  };
+
+  handleSum = () => {
+    const result = this.state.num1 + this.state.num2;
+    this.setState({ result });
+    console.log(result + ' PAI');
+  };
+
+  handleRest = () => {
+    const result = this.state.num1 - this.state.num2;
+    this.setState({ result });
+    console.log(result + ' PAI');
+  };
+
+  render() {
+    return (
+      <View style={appStyles.safeArea}>
+        <StatusBar />
+        <CountScreen
+          label={`Suma: ${this.state.num1} + ${this.state.num2} = ${this.state.result}`}
+          OnPress={this.handleSum}
+        />
+        <CountScreen
+          label={`Resta: ${this.state.num1} - ${this.state.num2} = ${this.state.result}`}
+          OnPress={this.handleRest}
+        />
+      </View>
+    );
   }
 }
-
 
 export default App;
