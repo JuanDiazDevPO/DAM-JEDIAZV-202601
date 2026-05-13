@@ -1,26 +1,29 @@
-import React from "react";
-import { Vibration, View } from "react-native";
-import { Text } from "react-native-gesture-handler";
+import React from 'react';
+import { View, Text, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import styles from './AuthTemplateStyles';
 
 interface AuthTemplateProps {
-    title: string;
-    subtitle?: string;
-    children: React.ReactNode;
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
 }
 
-const AuthTemplate =
-    ({ title, subtitle, children }: AuthTemplateProps) => {
-        return (
-            <View>
-                <Text>{title}</Text>
-                {subtitle && <Text>{subtitle}</Text>}
-                <View>
-                    {children}
-                </View>
-            </View>
-
-        );
-
-    }
+const AuthTemplate = ({ title, subtitle, children }: AuthTemplateProps) => {
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled">
+        <View style={styles.header}>
+          <Text style={styles.title}>{title}</Text>
+          {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+        </View>
+        <View style={styles.content}>{children}</View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
 
 export default AuthTemplate;

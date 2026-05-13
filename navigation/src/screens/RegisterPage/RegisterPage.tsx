@@ -1,24 +1,22 @@
-import React from "react";
-import { AuthTemplate } from "../../components/templates";
-import { LoginForm, RegisterForm } from "../../components/organism";
-import { AuthStackParamList } from "../../Routes";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import React from 'react';
+import { AuthTemplate } from '../../components/templates';
+import { RegisterForm } from '../../components/organism';
+import { AuthStackParamList } from '../../Routes';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-const RegisterPage = () =>{
-    const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
-    const handleRegister = () =>{
-        console.log("tap en iniciar sesion")
-        navigation.navigate("Login")
-    }
+const RegisterPage = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
 
-    return(
-        <AuthTemplate title="Register" subtitle="Crear nueva cuenta">
-            <RegisterForm onSubmit={handleRegister}>
+  const handleRegister = () => {
+    navigation.navigate('Login');
+  };
 
-            </RegisterForm>
-        </AuthTemplate>
-    )
-}
+  return (
+    <AuthTemplate title="REGISTER" subtitle="Create a new account">
+      <RegisterForm onSubmit={handleRegister} />
+    </AuthTemplate>
+  );
+};
 
 export default RegisterPage;
