@@ -6,9 +6,10 @@ import styles from './RegisterFormStyles';
 
 interface RegisterFormProps {
   onSubmit: () => void;
+  disabledAction: boolean;
 }
 
-const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
+const RegisterForm = ({ onSubmit, disabledAction }: RegisterFormProps) => {
   const [fullName, setFullName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -60,7 +61,7 @@ const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
         value={confirmPassword}
         onChangeText={setConfirmPassword}
       />
-      <Button title="Create Account" onSubmit={onSubmit} />
+      <Button title="Create Account" onSubmit={onSubmit} disabled={disabledAction} />
     </View>
   );
 };
