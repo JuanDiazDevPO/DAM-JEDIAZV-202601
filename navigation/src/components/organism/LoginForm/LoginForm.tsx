@@ -5,7 +5,7 @@ import { PasswordInput } from '../../molecules';
 import styles from './LoginFormStyles';
 
 interface LoginFormProps {
-  onSubmit: () => void;
+  onSubmit: (username: string, password: string) => void;
   onSignUp: () => void;
   onForgotPassword?: () => void;
 }
@@ -32,7 +32,7 @@ const LoginForm = ({ onSubmit, onSignUp, onForgotPassword }: LoginFormProps) => 
       <Pressable onPress={onForgotPassword} style={styles.forgotContainer}>
         <Text style={styles.forgotText}>FORGOT PASSWORD?</Text>
       </Pressable>
-      <Button title="Login" onSubmit={onSubmit} disabled={false}  />
+      <Button title="Login" onSubmit={() => onSubmit(username, password)} disabled={false} />
       <View style={styles.signUpRow}>
         <Text style={styles.signUpText}>Don't have an account? </Text>
         <Pressable onPress={onSignUp}>

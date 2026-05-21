@@ -4,8 +4,17 @@ import { Input, Button } from '../../atoms';
 import { PasswordInput } from '../../molecules';
 import styles from './RegisterFormStyles';
 
+interface RegisterFormData {
+  nombre: string;
+  username: string;
+  correo: string;
+  fechaNacimiento: string;
+  contrasena: string;
+  confirmPassword: string;
+}
+
 interface RegisterFormProps {
-  onSubmit: () => void;
+  onSubmit: (data: RegisterFormData) => void;
   disabledAction: boolean;
 }
 
@@ -61,7 +70,11 @@ const RegisterForm = ({ onSubmit, disabledAction }: RegisterFormProps) => {
         value={confirmPassword}
         onChangeText={setConfirmPassword}
       />
-      <Button title="Create Account" onSubmit={onSubmit} disabled={disabledAction} />
+      <Button
+        title="Create Account"
+        onSubmit={() => onSubmit({ nombre: fullName, username, correo: email, fechaNacimiento: dob, contrasena: password, confirmPassword })}
+        disabled={disabledAction}
+      />
     </View>
   );
 };

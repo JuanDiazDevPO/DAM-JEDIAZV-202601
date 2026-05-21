@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-native';
 import { AuthTemplate } from '../../components/templates';
 import { RegisterForm } from '../../components/organism';
 import { AuthStackParamList } from '../../Routes';
@@ -9,18 +10,36 @@ import { AuthService } from '../../core/services';
 const RegisterPage = () => {
   const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
 
-  const handleRegister = async () => {
-    navigation.navigate('Login');
-    const user = {
-      id: '',
-      nombre: 'Tamarindo',
-      username: 'Tamarindo',
-      correo: 'tamarindo@mail.com',
-      fechaNacimiento: '2000-01-01',
-      contrasena: 'Tamarindo'
-    };
-
-    await AuthService.register(user);
+  const handleRegister = async (data: {
+    nombre: string;
+    username: string;
+    correo: string;
+    fechaNacimiento: string;
+    contrasena: string;
+    confirmPassword: string;
+  }) => {
+    if (!data.nombre || !data.username || !data.correo || !data.fechaNacimiento || !data.contrasena) {
+      Alert.alert('Error', 'Completa todos los campos');
+      return;
+    }
+    if (data.contrasena !== data.confirmPassword) {
+      Alert.alert('Error', 'Las contraseñas no coinciden');
+      return;
+    }
+    try {
+      await AuthService.register({
+        nombre: data.nombre,
+        username: data.username,
+        correo: data.correo,
+        fechaNacimiento: data.fechaNacimiento,
+        contrasena: data.contrasena,
+      });
+      Alert.alert('Éxito', 'Cuenta creada correctamente', [
+        { text: 'OK', onPress: () => navigation.navigate('Login') },
+      ]);
+    } catch (error: any) {
+      Alert.alert('Error', error.message);
+    }
   };
 
   return (

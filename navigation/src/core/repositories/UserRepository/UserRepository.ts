@@ -5,7 +5,7 @@ const UserRepository = {
     create:(user:User): number | undefined=>{
         const query = `INSERT INTO users (nombre, username, correo, fechaNacimiento, contrasena) 
         VALUES (?, ?, ?, ?, ?);`;
-        const result = db.execute(query,[
+        const result = db.executeSync(query,[
             user.nombre,
             user.username,
             user.correo,
@@ -17,9 +17,9 @@ const UserRepository = {
 
     findByUsername:(username:string): User | null =>{
         const query = `SELECT * FROM users WHERE username = ? LIMIT 1;`;
-        const {rows} = db.execute(query, [username]);
-        if(rows != undefined){
-            return rows._array.length > 0 ? rows._array[0] as User : null;
+        const {rows} = db.executeSync(query, [username]);
+        if(rows != undefined && rows.length > 0){
+            return rows[0] as unknown as User;
         }
         return null;
     },
@@ -29,7 +29,7 @@ const UserRepository = {
     },
     delete:(id:number): void =>{
        const query = `DELETE FROM users WHERE id = ?;`;
-       db.execute(query, [id]);
+       db.executeSync(query, [id]);
     }
 
 
